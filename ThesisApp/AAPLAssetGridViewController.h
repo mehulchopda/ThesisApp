@@ -12,7 +12,6 @@
 @import Photos;
 
 @interface AAPLAssetGridViewController : UICollectionViewController
-
 @property (strong) PHFetchResult *assetsFetchResults;
 @property (strong) PHAssetCollection *assetCollection;
 @property (nonatomic, weak) id<GalleryViewControllerProtocol> delegate;

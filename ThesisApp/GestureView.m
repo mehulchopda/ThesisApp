@@ -49,12 +49,7 @@ NSTimer *timer;
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     [super touchesBegan:touches withEvent:event];
-  /*  self.startDate = [NSDate date];
-    
-    // Create the stop watch timer that fires every 10 ms
-    timer = [NSTimer scheduledTimerWithTimeInterval:1.0/10.0 target:self selector:@selector(updateTimer) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer: timer forMode: NSDefaultRunLoopMode];
-    */
+ 
 
     
   UIView *view= [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];

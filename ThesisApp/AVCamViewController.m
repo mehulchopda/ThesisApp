@@ -147,11 +147,7 @@ int timen=0;
     
     
     
-    //Set Camera mode on for the fisrst start
-    
-    
-    
-    
+    //Set Camera mode on for the first start
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleUpdatedData:)
@@ -164,7 +160,7 @@ int timen=0;
     // -[AVCaptureSession startRunning] is a blocking call which can take a long time. We dispatch session setup to the sessionQueue so that the main queue isn't blocked (which keeps the UI responsive).
     
     
-    //Add gesture Recognizer
+    //Add the gesture Recognizer
     dollarPGestureRecognizer = [[DollarPGestureRecognizer alloc] initWithTarget:self
                                                                          action:@selector(gestureRecognized:)];
     [dollarPGestureRecognizer setPointClouds:[DollarDefaultGestures defaultPointClouds]];
@@ -174,10 +170,7 @@ int timen=0;
     
     
     
-    
     // Added Swiipe to draw the Gesture
-    
-    
     UISwipeGestureRecognizer *swipeRight=[[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(didSwipe:)];
     [[self view] addGestureRecognizer:swipeRight];
     swipeRight.numberOfTouchesRequired=2;
@@ -185,11 +178,9 @@ int timen=0;
     swipeLeft.direction=UISwipeGestureRecognizerDirectionLeft;
     [[self view] addGestureRecognizer:swipeLeft];
     swipeLeft.numberOfTouchesRequired=2;
-    
     UITapGestureRecognizer *tapGesture=[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapped:) ];
     tapGesture.numberOfTapsRequired=1;
     [[self view] addGestureRecognizer:tapGesture];
-    
     
     
     
@@ -266,7 +257,7 @@ int timen=0;
     
 }
 -(void)didTapped:(UITapGestureRecognizer *)sender{
-   
+    
     self.previewView.alpha=1;
     
     NSLog(@"didTapped Received data=%@",dataCam);
@@ -338,46 +329,28 @@ int timen=0;
 }
 
 -(void)timer{
-//    if ([dataCam isEqualToString:@"Timer"]){
-//        static int count = 5;
-//        count--;
-//        
-//        NSString *s = [[NSString alloc]
-//                       initWithFormat:@"%d", count];
-//        
-//        [self.myCounterLabel setHidden:NO];
-//        self.myCounterLabel.text =   s;
-//    }
     timen=6;
-//    self.myCounterLabel.hidden=NO;
-//    [self.myCounterLabel setFont:[UIFont systemFontOfSize:90]];
-//    self.myCounterLabel.text = [NSString stringWithFormat:@"%d", timen];
-    
     Timer = [NSTimer scheduledTimerWithTimeInterval:1.0  target:self selector:@selector(updateCounter:) userInfo:nil repeats:YES];
-    //[[NSRunLoop mainRunLoop] addTimer: Timer forMode: NSDefaultRunLoopMode];
-
-    
-    
 }
+
 - (void)updateCounter:(NSTimer *)theTimer {
-   timen--;
+    timen--;
     self.myCounterLabel.hidden=NO;
     [self.myCounterLabel setFont:[UIFont systemFontOfSize:90]];
     self.myCounterLabel.text = [NSString stringWithFormat:@"%d", timen];
-   
+    
     if (timen == 0) {
         [theTimer invalidate];
-         [self snapStillImage:self];
+        [self snapStillImage:self];
         NSLog(@"Photo was Taken");
         [self.myCounterLabel setFont:[UIFont systemFontOfSize:20]];
         self.myCounterLabel.hidden=YES;
-        //[_timeLabel performSelector:@selector(setText:) withObject:@"Photo taken!" afterDelay:1.0];
-        //Code for image shown at last second
+        
     }
-
     
     
-   
+    
+    
 }
 
 -(void)didSwipe:(UISwipeGestureRecognizer *)sender{
@@ -386,19 +359,14 @@ int timen=0;
     UISwipeGestureRecognizerDirection direction=sender.direction;
     switch (direction) {
         case UISwipeGestureRecognizerDirectionRight:
-        {NSLog(@"Swipe Right Detetcted");
-            
-            // [self performSegueWithIdentifier:@"toViewController" sender:sender];
-            // NSString *itemToPassBack = @"Grid";
-           // [self.delegate addItemViewController:@"Grid"];
-           // [self.navigationController popViewControllerAnimated:YES];
-            //self.previewView.alpha=1;
+        {
+            NSLog(@"Swipe Right Detetcted");
             break;
         }
         case UISwipeGestureRecognizerDirectionLeft:
         { NSLog(@"Swipe Left Detetcted");
             [self performSegueWithIdentifier:@"topictureGallery" sender:sender];
-           self.previewView.alpha=1;
+            self.previewView.alpha=1;
             break;
         }
         default:
@@ -406,9 +374,9 @@ int timen=0;
             
     }
 }
--(void)handleUpdatedData:(NSNotification *)notification {   
+-(void)handleUpdatedData:(NSNotification *)notification {
     
-     self.previewView.alpha=1;
+    self.previewView.alpha=1;
     [dollarPGestureRecognizer recognize];
     [gestureView clearAll];
     recognized = !recognized;
@@ -418,7 +386,7 @@ int timen=0;
 - (void)gestureRecognized:(DollarPGestureRecognizer *)sender {
     DollarResult *result = [sender result];
     NSLog(@"Gesture name=%@",[result name]);
-    NSLog(@"Gesture name=%@",[sender points]);    
+    NSLog(@"Gesture name=%@",[sender points]);
     
     
     if ([[result name] isEqualToString:@"Settings"]  ) {
@@ -426,7 +394,7 @@ int timen=0;
         [self openSettings];
         [self stopTimer];
         
-       
+        
         
     }
     
@@ -494,7 +462,7 @@ int timen=0;
         dataCam=@"Timer";
         [self timer];
         [self stopTimer];
-       
+        
         
         
         
@@ -504,10 +472,6 @@ int timen=0;
     
     if ([[result name] isEqualToString:@"Video"] || [[result name] isEqualToString:@"Triangle"])
     {
-        //self.previewView.transform = CGAffineTransformIdentity;
-        
-        // ([grid isEqualToString:@"Grid"]);
-        //{
         
         modeCam=@"Video";
         
@@ -516,10 +480,10 @@ int timen=0;
         self.myCounterLabel.text=@"Tap to Start/Stop the video";
         int duration = 3; // duration in seconds
         
-       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [self.myCounterLabel setHidden:YES];
         });
-      [self stopTimer];
+        [self stopTimer];
         
         
         
@@ -535,9 +499,7 @@ int timen=0;
         
         modeCam=@"Camera";
         
-        // self.previewView.transform = CGAffineTransformIdentity;
         
-        // modeCam=@"Camera";
         
         self.modeLabel.text=@"Camera";
         [self.myCounterLabel setHidden:NO];
@@ -547,11 +509,8 @@ int timen=0;
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, duration * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
             [self.myCounterLabel setHidden:YES];
         });
-       [self stopTimer];
-
-        
-        
-        
+        [self stopTimer];
+          
         
     }
     if ([[result name] isEqualToString:@"Square"])
@@ -580,11 +539,11 @@ int timen=0;
         dataCam=@"FrontCamera";
         [self changeCamera:self];
         [self stopTimer];
-
+        
         
     }
     if ([[result name] isEqualToString:@"BackCamera"] )
-    {       
+    {
         
         [self.myCounterLabel setHidden:NO];
         self.myCounterLabel.text=@"BackCamera Enabled";
@@ -596,20 +555,11 @@ int timen=0;
         dataCam=@"BackCamera";
         [self changeCamera:self];
         [self stopTimer];
-
         
         
     }
     
-    
 }
-
-
-
-
-
-
-
 
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -639,7 +589,6 @@ int timen=0;
     
     
     
-    //Open Settings
     
     
     
@@ -668,26 +617,14 @@ int timen=0;
 -(void)DrawGridLines{
     
     
-    // DBCameraGridView *cameraGridView=[[DBCameraGridView alloc]init];
+    
     DBCameraGridView  *cameraGridView = [[DBCameraGridView alloc] initWithFrame:self.view.frame];
-    // [cameraGridView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [cameraGridView setNumberOfColumns:2];
     [cameraGridView setNumberOfRows:2];
     [cameraGridView setTag:99];
     [cameraGridView setAlpha:1];
     //[self.previewView setMaskView:cameraGridView];
     [self.view addSubview:cameraGridView];
-    
-    
-    //        SUPGridWindow *grid=[SUPGridWindow sharedGridWindow];
-    //        [grid setGridColor:[UIColor blackColor]];
-    //        [grid setMajorGridSize:CGSizeMake(10, 10)];
-    //        [grid setMinorGridSize:CGSizeMake(40, 40)];
-    //
-    //    // add this new view to your main view
-    //        [self.previewView addSubview:grid];
-    
-    
     
     
 }

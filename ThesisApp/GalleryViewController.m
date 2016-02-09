@@ -74,9 +74,6 @@
 -(void)viewWillAppear:(BOOL)animated{
     
     [super viewDidLoad];
-  
-    
-    
     
     [super viewWillAppear:animated];
     
@@ -91,11 +88,9 @@
  
     switch (direction) {
         case UISwipeGestureRecognizerDirectionRight:
-        {NSLog(@"Swipe Right Detetcted");
-            
-            //UIView *view= [[[[UIApplication sharedApplication] keyWindow] subviews] lastObject];
-            //UIImageView *myImageView = (UIImageView *)[view viewWithTag:15];
-            self.imageView.alpha=1;
+        {
+            NSLog(@"Swipe Right Detetcted");
+                       self.imageView.alpha=1;
             
             [self.navigationController popViewControllerAnimated:YES];
             break;}
